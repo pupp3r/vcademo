@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - VCA Demo</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">VCA Demo</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li><a class="nav-link" href="/">Home</a></li>
+                    <li><a class="nav-link" href="/VCA_Contact_Demo/Contacts">Contacts</a></li>
+                    @if (ViewBag.ClassicASP["loggedin"] == "1")
+                    {
+                        <li class="ms-auto"><a class="nav-link" href="/resetpassword.asp">Reset Password</a></li>
+                        <li><a class="nav-link" href="/logout.asp">Log Out (@ViewBag.ClassicASP["username"])</a></li>
+                    } else
+                    {
+                        <li class="ms-auto"><a class="nav-link" href="/login.asp">Log In</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/sitescripts")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

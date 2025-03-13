@@ -1,0 +1,166 @@
+﻿@using VCA_Contact_Demo.Models;
+@{
+    ViewBag.Title = "Contacts - " + @ViewBag.ClassicASP["username"];
+}
+
+<main aria-labelledby="title">
+    <h3 id="title">@ViewBag.Title</h3>
+    <hr/>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" onclick="openAddModal()">Add Contact</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table id="contactsTable" class="table table-bordered" style="width: 100%;"></table>
+        </div>
+    </div>
+</main>
+
+
+<!-- add contact modal -->
+<div class="modal" id="addContactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addContactForm">
+                    <div class="mb-3">
+                        <label for="addContactFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="addContactFirstName" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="addContactLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="addContactLastName" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="addContactEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="addContactEmail" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="addContactPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="addContactPhone" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addSubmitBtn" onclick="addContact()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /add contact modal -->
+<!-- edit contact modal -->
+<div class="modal" id="editContactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editContactForm">
+                    <input type="hidden" id="editContactID" />
+                    <div class="mb-3">
+                        <label for="editContactFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editContactFirstName" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editContactLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editContactLastName" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editContactEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editContactEmail" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editContactPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="editContactPhone" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="editSubmitBtn" onclick="editContact()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /edit contact modal -->
+
+
+<!-- delete contact modal -->
+<div class="modal" id="deleteContactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteContactInfo">Are you sure you want to delete this contact?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="deleteContactConfirmButton">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /delete contact modal -->
+
+
+
+
+
+
+
+@section scripts {
+    <script>
+        // initialize our datatable using jquery DataTables
+        var table = new DataTable("#contactsTable",
+            {
+                // data sourced from a JSON endpoint on the server so it can be reloaded without a page refresh
+                ajax: {
+                    url: "/VCA_Contact_Demo/Contacts/GetContactListJson",
+                    dataSrc: ""
+                },
+                order: {
+                    name: "lastname",
+                    dir: "asc"
+                },
+                // column definitions
+                columns: [
+                    { name: "lastname", data: "lastname", visible: false },
+                    {
+                        title: "Name", name: "name", data: null,
+                        render: function (data, type, row) {
+                            return "<span>" + row.firstname + "</span>&nbsp;" +
+                                "<span>" + row.lastname + "</span>";
+                        }
+                    },
+                    { title: "Email", data: "email" },
+                    { title: "Phone", data: "phone" },
+                    {
+                        title: "Actions",
+                        data: null,
+                        defaultContent: `<button class="btn btn-sm btn-outline-info mr-3" onclick="openEditModal(this)">Edit</button>`
+                            + `<button class="btn btn-sm btn-outline-danger" onclick="openDeleteModal(this)">Delete</button>`,
+                        targets: -1
+                    }
+                ]
+            }
+        )
+
+        // quick function for reloading the table after CRUD operations
+        function refreshTable() {
+            table.ajax.reload();
+        }
+    </script>
+    <script src="~/Scripts/App/Contacts.js"></script>
+}

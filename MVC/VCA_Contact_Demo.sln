@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCA_Contact_Demo", "VCA_Contact_Demo.csproj", "{2230C20A-ABDD-4BA8-A617-1E1B5E9FA11C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCA_Contact_Demo.Tests", "..\VCA_Contact_Demo.Tests\VCA_Contact_Demo.Tests.csproj", "{51AF5D97-5A6B-47D8-B8DF-D6E46A4BAB67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2230C20A-ABDD-4BA8-A617-1E1B5E9FA11C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2230C20A-ABDD-4BA8-A617-1E1B5E9FA11C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2230C20A-ABDD-4BA8-A617-1E1B5E9FA11C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2230C20A-ABDD-4BA8-A617-1E1B5E9FA11C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51AF5D97-5A6B-47D8-B8DF-D6E46A4BAB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51AF5D97-5A6B-47D8-B8DF-D6E46A4BAB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51AF5D97-5A6B-47D8-B8DF-D6E46A4BAB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51AF5D97-5A6B-47D8-B8DF-D6E46A4BAB67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E63E4A5F-8EFB-4388-90B9-7F20A159031A}
+	EndGlobalSection
+EndGlobal
