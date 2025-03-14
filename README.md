@@ -46,9 +46,10 @@ In order to run it on your machine, you will need to do the following:
 - Create a virtual directory in IIS called VCA_Contact_Demo
 - Build the project in Release mode and publish to this folder
 - Set up folder permissions so that static files are accessible from the accounts used by IIS (usually IUSR and IIS_IUSRS)
+- Edit Web.config to add your connection string
 
 #### Other install notes
-- On my hosted instance, I created an SSL certificate with a tool called [Certify The Web](https://certifytheweb.com/), which is basically a windows-friendly version of certbot.
+- On my hosted instance, I created an SSL certificate with a tool called [Certify The Web](https://certifytheweb.com/), which is basically a windows-friendly version of certbot with a nice GUI on top.
 
 
 ## Remarks
