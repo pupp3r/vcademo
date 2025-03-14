@@ -24,7 +24,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="created" Type="datetime" />
           <Property Name="username" Type="varchar" MaxLength="100" />
-          <Property Name="password" Type="nvarchar" MaxLength="250" />
+          <Property Name="passhash" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityContainer Name="vcademoModelStoreContainer">
           <EntitySet Name="contact" EntityType="Self.contact" Schema="dbo" store:Type="Tables" />
@@ -57,7 +57,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="passhash" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -81,7 +81,7 @@
           <EntitySetMapping Name="webusers">
             <EntityTypeMapping TypeName="vcademoModel.webuser">
               <MappingFragment StoreEntitySet="webuser">
-                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="passhash" ColumnName="passhash" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="id" ColumnName="id" />

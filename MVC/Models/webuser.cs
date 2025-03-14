@@ -17,6 +17,6 @@ namespace VCA_Contact_Demo.Models
         public int id { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public string username { get; set; }
-        public string password { get; set; }
+        public string passhash { get; set; }
     }
 }
