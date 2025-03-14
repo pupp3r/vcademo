@@ -7,7 +7,7 @@
 
 
 Sub Application_OnStart
-    Application("connectionString") = "DSN=vcadsntest;Driver={ODBC Driver 17 for SQL Server};Server=GLADE-AIR-FRESH;Database=vcademo;UID=vcadsnuser;Pwd=g3fkh2Z~G95hNkb2s7y;Option=3;"
+    Application("connectionString") = "DSN=[Your DSN];Driver={ODBC Driver 17 for SQL Server};Server=[YourServerName];Database=[YourDB];UID=[YourSqlUser];Pwd=[YourSqlPassword];Option=3;"
 End Sub
 
 

@@ -26,15 +26,22 @@
 		password = Request.form("password")
 
 		' check the provided credentials against the DB
-		comm.CommandText = "select id, [username], [password] from webuser where username=?"
+		comm.CommandText = "select id, [username], [passhash] from webuser where username=?"
 		comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
 
 		set rs = comm.execute
 
 		if rs.EOF = false then
-			Dim dbPass
-			set dbPass = rs("password")
-			if dbPass = password then
+			' get the password hash from the DB row
+			Dim passhash
+			set passhash = rs("passhash")
+
+			' validate it with Bcrypt (see https://github.com/as08/ClassicASP.Bcrypt)
+			Set Bcrypt = Server.CreateObject("ClassicASP.BCrypt")
+			dim passwordCorrect
+			passwordCorrect = Bcrypt.Verify(password, passhash)
+
+			if passwordCorrect then
 				Session.Contents.RemoveAll()
 				Session("loggedin") = "1"
 				Session("username") = username

@@ -1,7 +1,6 @@
 <!-- #include file="master.asp" -->
 
 <%
-
 If Request.ServerVariables("REQUEST_METHOD") = "POST" Then
 
 Dim con
@@ -27,7 +26,7 @@ comm.Prepared = true
 
 
 ' check if user already exists
-comm.CommandText = "select [username], [password] from webuser where username=?"
+comm.CommandText = "select [username] from webuser where username=?"
 comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
 
 set rs = comm.execute
@@ -37,6 +36,10 @@ if rs.EOF = false then
 	Response.end()
 end if
 
+' user does not exist already, so let's create a Bcrypt hash
+'    - info on how to set this up at https://github.com/as08/ClassicASP.Bcrypt
+Set Bcrypt = Server.CreateObject("ClassicASP.BCrypt")
+passhash = Bcrypt.Hash(password)
 
 ' re-create command object
 Set comm = Server.createObject("ADODB.Command")
@@ -45,15 +48,15 @@ comm.commandType = adCmdText
 comm.Prepared = true
 
 ' insert the data into the webuser table
-comm.CommandText = "insert into webuser (username, password) values (?,?)"
+comm.CommandText = "insert into webuser (username, passhash) values (?,?)"
 comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
-comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, password))
+comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 200, passhash))
 
 
 comm.execute(adExecuteNoRecords)
 
 con.close
-Response.redirect("/login.asp?loginRequired=1")
+Response.redirect("/login.asp?accountCreated=1")
 
 End If
 

@@ -33,34 +33,45 @@ comm.commandType = adCmdText
 comm.Prepared = true
 
 
-' check if user already exists
-comm.CommandText = "select [username], [password] from webuser where username=? and password=?"
+' check if user's current password is correct
+comm.CommandText = "select [username], passhash from webuser where username=?"
 comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
-comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, oldpassword))
 
 set rs = comm.execute
 
-if rs.EOF = true then
-	Response.write("Old password is incorrect")
-	Response.end()
+if rs.EOF = false then
+	' get the password hash from the DB row
+	Dim passhash
+	set passhash = rs("passhash")
+
+	' validate it with Bcrypt (see https://github.com/as08/ClassicASP.Bcrypt)
+	Set Bcrypt = Server.CreateObject("ClassicASP.BCrypt")
+	dim passwordCorrect
+	passwordCorrect = Bcrypt.Verify(oldpassword, passhash)
+
+	' now that we have verified the user's old password, we can set their new one
+	if passwordCorrect then
+		' re-create command object
+		Set comm = Server.createObject("ADODB.Command")
+		comm.ActiveConnection = con
+		comm.commandType = adCmdText
+		comm.Prepared = true
+
+		dim newHash
+		newHash = Bcrypt.Hash(password)
+		' update the user record with the new hash
+		comm.CommandText = "update webuser set passhash=? where username=?"
+		comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 200, newHash))
+		comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
+
+		comm.execute(adExecuteNoRecords)
+
+		con.close
+		Response.redirect("/login.asp?passwordReset=1")
+	else
+		Response.Write("Password incorrect. Unable to reset password")
+	end if
 end if
-
-
-' re-create command object
-Set comm = Server.createObject("ADODB.Command")
-comm.ActiveConnection = con
-comm.commandType = adCmdText
-comm.Prepared = true
-
-' insert the data into the webuser table
-comm.CommandText = "update webuser set password=? where username=?"
-comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, password))
-comm.Parameters.Append(comm.CreateParameter(, adVarChar, adParamInput, 250, username))
-
-comm.execute(adExecuteNoRecords)
-
-con.close
-Response.redirect("/login.asp?passwordReset=1")
 
 End If
 
