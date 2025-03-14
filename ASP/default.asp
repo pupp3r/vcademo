@@ -33,16 +33,18 @@
 			<% if Session("loggedin") = "1" then %>
 				<small>Logged in as <%=Session("username")%></small>
 			<% else %>
-				<small>Please <a href="/login.asp">log in</a> or <a href="/createaccount.asp">create an account</a> to continue</small>
+				<p>Please <a href="/login.asp">log in</a> or <a href="/createaccount.asp">create an account</a> to continue</p>
 			<% end if %>
 
 		</div>
 	</div>
 
+	<% if Session("loggedin") = "1" then %>
 	<div class="row mt-5">
 		<div class="col text-center">
 			<a class="btn btn-primary" href="/VCA_Contact_Demo/Contacts">Contacts</a>
 		</div>
 	</div>
+	<% end if %>
 
 <% End Sub %>
