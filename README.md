@@ -4,7 +4,9 @@ This code is for an evaluation project for VCA Software.
 
 ## Live Demo
 
-The live demo is available at [vcademo.pupp3r.net](https://vcademo.pupp3r.net)
+**Update (Apr 8 2025)**: The free cloud account I was hosting this on has expired. This is no longer accessible at the URL below. Please contact me if you would like me to spin up a new instance with another free account.
+
+The live demo ~~is~~ was available at [vcademo.pupp3r.net](https://vcademo.pupp3r.net)
 
 
 ## How it works
